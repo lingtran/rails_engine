@@ -1,5 +1,6 @@
 require 'csv'
 namespace :import_data do
+
   desc "Import customers from CSV"
   task customers: :environment do
     filename = File.join Rails.root, 'db/data/customers.csv'
