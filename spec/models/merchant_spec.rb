@@ -9,6 +9,7 @@ RSpec.describe Merchant, type: :model do
 
   context "associations" do
     it { should have_many(:invoices) }
+    it { should have_many(:items) }
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
     it { should have_many(:invoice_items).through(:invoices) }
@@ -52,6 +53,26 @@ RSpec.describe Merchant, type: :model do
       random_merchant = Merchant.rand
 
       expect(random_merchant).not_to eq(merchant_one) if random_merchant == merchant_two
+    end
+  end
+
+  context "relationship endpoints" do
+    before(:each) do
+      @merchant = create(:merchant)
+    end
+
+    it "can return a collection of items specific to a merchant" do
+      queried_items_for_merchant = Merchant.find_by(id: @merchant.id).items
+      items_from_method = Merchant.items(@merchant.id)
+
+      expect(items_from_method).to eq(queried_items_for_merchant)
+    end
+
+    it "can return a collection of invoices specific to a merchant" do
+      queried_invoices_for_merchant = Merchant.find_by(id: @merchant.id).invoices
+      invoices_from_method = Merchant.invoices(@merchant.id)
+
+      expect(invoices_from_method).to eq(queried_invoices_for_merchant)
     end
   end
 end
