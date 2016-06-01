@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         get 'find', on: :collection
         get 'find_all', on: :collection
         get 'random', on: :collection
+        get 'invoice', on: :member
       end
     end
   end
