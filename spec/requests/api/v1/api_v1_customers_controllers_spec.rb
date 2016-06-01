@@ -84,4 +84,43 @@ RSpec.describe "Api::V1::CustomersController", type: :request do
       expect(response_body.class).to eq(Hash)
     end
   end
+
+  describe "GET invoices" do
+    before(:each) do
+      @customer = create(:customer)
+      id = @customer.id
+      create_list(:invoice, 2, customer_id: id)
+      get "/api/v1/customers/#{id}/invoices"
+    end
+
+    it "returns an invoices response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a collection of invoices for customer" do
+      expect(response_body.count).to eq(2)
+      expect(response_body.first[:id]).to eq(@customer.invoices.first.id)
+    end
+  end
+
+  describe "GET transactons" do
+    before(:each) do
+      @customer = create(:customer)
+      id = @customer.id
+      invoice = create(:invoice, customer_id: id)
+      create_list(:transaction, 2, invoice_id: invoice.id)
+      get  "/api/v1/customers/#{id}/transactions"
+    end
+
+    it "returns a transactions response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a collection of transactions for customer" do
+      expect(response_body.count).to eq(2)
+      expect(response_body.last[:id]).to eq(@customer.transactions.last.id)
+    end
+  end
 end
