@@ -19,6 +19,10 @@ class Api::V1::CustomersController < Api::ApiController
     respond_with Customer.rand
   end
 
+  def invoices
+    respond_with Customer.find(params[:id]).invoices
+  end
+
   private
     def customer_params
       params.permit(:first_name, :last_name, :created_at, :updated_at)
