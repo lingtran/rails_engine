@@ -23,7 +23,7 @@ class Api::V1::InvoiceItemsController < Api::ApiController
     respond_with InvoiceItem.has_invoice(params[:id])
   end
 
-  def iteme
+  def item
     respond_with InvoiceItem.has_item(params[:id])
   end
 

@@ -12,7 +12,16 @@ RSpec.describe Transaction, type: :model do
 
   context "associations" do
     it { should belong_to(:invoice) }
-    it { should belong_to(:customer).class_name("Invoice") }
+    it { should respond_to(:customer) }
+
+    it "returns associated customer record" do
+      customer = create(:customer)
+      merchant = create(:merchant)
+      invoice = create(:invoice, customer_id: customer.id, merchant_id: merchant.id)
+      transaction = create(:transaction, invoice_id: invoice.id)
+
+      expect(transaction.customer).to eq(customer)
+    end
   end
 
   context "single finder" do

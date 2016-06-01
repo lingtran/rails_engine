@@ -1,7 +1,7 @@
 module Controller
   module JsonHelpers
-    def json
-      JSON.parse(response.body)
+    def response_body
+      JSON.parse(response.body, symbolize_names: true)
     end
   end
 end
