@@ -1,6 +1,4 @@
 class Api::V1::MerchantsController < Api::ApiController
-  respond_to :json
-
   def index
     respond_with Merchant.all
   end
@@ -10,11 +8,11 @@ class Api::V1::MerchantsController < Api::ApiController
   end
 
   def find
-    respond_with Merchant.find_by(merchant_params)
+    respond_with Merchant.search(merchant_params)
   end
 
   private
-  def merchant_params
-    params.permit(:name, :created_at, :updated_at)
-  end
+    def merchant_params
+      params.permit(:name, :created_at, :updated_at)
+    end
 end

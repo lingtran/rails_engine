@@ -6,4 +6,8 @@ class Merchant < ActiveRecord::Base
       name: name
     }
   end
+
+  def self.search(params)
+    where('params = ?', { name: params[:name], created_at: params[:created_at], updated_at: params[:updated_at] })
+  end
 end
