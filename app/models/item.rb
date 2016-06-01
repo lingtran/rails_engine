@@ -1,5 +1,13 @@
 class Item < ActiveRecord::Base
   belongs_to :merchant
+  has_many :invoice_items
+
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :unit_price, presence: true
+  validates :merchant_id, presence: true
+  validates :created_at, presence: true
+  validates :updated_at, presence: true
 
   def self.search_by(params)
     if params[:name]

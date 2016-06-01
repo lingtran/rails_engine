@@ -16,4 +16,66 @@ RSpec.describe Invoice, type: :model do
     it { should have_many(:transactions) }
     it { should have_many(:items).through(:invoice_items) }
   end
+
+  context "single finder" do
+    before(:each) do
+      @invoice = create(:invoice)
+    end
+
+    it "returns a single invoice record for case insensitive search by result" do
+      first_params = { status: "SHIPPED" }
+      not_result_attr = { status: "pending" }
+      first_result = Invoice.search_by(first_params)
+      nil_result = Invoice.search_by(not_result_attr)
+
+      expect(first_result).to eq(@invoice)
+      expect(nil_result).to eq(nil)
+    end
+
+    it "returns a single invoice record for other searches" do
+      params = { customer_id: 1 }
+      not_number = { customer_id: 2 }
+      result = Invoice.search_by(params)
+      nil_result = Invoice.search_by(not_number)
+
+      expect(result).to eq(@invoice)
+      expect(nil_result).to eq(nil)
+    end
+  end
+
+  context "multi finder" do
+    before(:each) do
+      @invoice = create(:invoice)
+    end
+
+    it "returns an array of invoice records for case insensitive search by result" do
+      first_params = { status: "SHIPPED" }
+      not_result_attr = { status: "pending" }
+      first_result = Invoice.find_all(first_params)
+      nil_result = Invoice.find_all(not_result_attr)
+
+      expect(first_result).to eq([@invoice])
+      expect(nil_result).to eq([])
+    end
+
+    it "returns an array of invoice records for other searches" do
+      params = { customer_id: 1 }
+      not_number = { customer_id: 2 }
+      result = Invoice.find_all(params)
+      nil_result = Invoice.find_all(not_number)
+
+      expect(result).to eq([@invoice])
+      expect(nil_result).to eq([])
+    end
+  end
+
+  context "#rand" do
+    it "returns a random transaction record" do
+      invoice_one, invoice_two = create_list(:invoice, 2)
+      random_invoice = Invoice.rand
+
+      expect(random_invoice).not_to eq(invoice_one) if random_invoice == invoice_two
+    end
+  end
+
 end
