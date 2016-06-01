@@ -78,4 +78,17 @@ RSpec.describe Invoice, type: :model do
     end
   end
 
+  context "relationship endpoints" do
+    before(:each) do
+      @invoice = create(:invoice)
+    end
+
+    it "returns a collection of associated transactions" do
+      queried_transactions_for_invoice = Invoice.find(@invoice.id).transactions
+      transaction_method = Invoice.transactions(@invoice.id)
+
+      expect(transaction_method).to eq(queried_transactions_for_invoice)
+    end
+  end
+
 end

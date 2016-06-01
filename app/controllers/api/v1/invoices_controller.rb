@@ -19,6 +19,10 @@ class Api::V1::InvoicesController < Api::ApiController
     respond_with Invoice.rand
   end
 
+  def transactions
+    respond_with Invoice.transactions(params[:id])
+  end
+
   private
 
   def invoice_params
