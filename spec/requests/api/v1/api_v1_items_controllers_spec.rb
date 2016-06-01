@@ -103,4 +103,22 @@ RSpec.describe "Api::V1::ItemsController", type: :request do
       expect(response_body.last[:id]).to eq(@item.invoice_items.last.id)
     end
   end
+
+  describe "GET merchant" do
+    before(:each) do
+      @merchant = create(:merchant)
+      @item = create(:item, merchant_id: @merchant.id)
+      id = @item.id
+      get "/api/v1/items/#{id}/merchant"
+    end
+
+    it "returns a merchant response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a merchant for item" do
+      expect(response_body[:id]).to eq(@item.merchant.id)
+    end
+  end
 end
