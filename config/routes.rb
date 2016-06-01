@@ -19,6 +19,11 @@ Rails.application.routes.draw do
         get 'find', on: :collection
         get 'find_all', on: :collection
         get 'random', on: :collection
+        get 'transactions', on: :member
+        get 'invoice_items', on: :member
+        get 'items', on: :member
+        get 'customer', on: :member
+        get 'merchant', on: :member
       end
 
       resources :items, only: [:index, :show] do

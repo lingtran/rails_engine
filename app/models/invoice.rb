@@ -30,4 +30,24 @@ class Invoice < ActiveRecord::Base
   def self.rand
     order("RANDOM()").first
   end
+
+  def self.has_transactions(id)
+    find(id).transactions
+  end
+
+  def self.has_invoice_items(id)
+    find(id).invoice_items
+  end
+
+  def self.has_items(id)
+    find(id).items
+  end
+
+  def self.has_customer(id)
+    find(id).customer
+  end
+
+  def self.has_merchant(id)
+    find(id).merchant
+  end
 end
