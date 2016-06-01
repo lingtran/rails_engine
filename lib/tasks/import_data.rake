@@ -1,6 +1,5 @@
 require 'csv'
 namespace :import_data do
-
   desc "Import customers from CSV"
   task customers: :environment do
     filename = File.join Rails.root, 'db/data/customers.csv'
@@ -85,4 +84,6 @@ namespace :import_data do
     puts "Successfully imported #{counter} transactions"
   end
 
+  desc "Import all items collectively"
+  task all: [:customers, :merchants, :invoices, :items, :invoice_items, :transactions]
 end

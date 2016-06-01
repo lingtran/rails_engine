@@ -1,6 +1,6 @@
 class Transaction < ActiveRecord::Base
   belongs_to :invoice
-  belongs_to :customer, class_name: "Invoice", foreign_key: :invoice_id
+  delegate :customer, to: :invoice
 
   validates :invoice_id, presence: true
   validates :credit_card_number, presence: true
