@@ -23,4 +23,24 @@ RSpec.describe InvoiceItem, type: :model do
       expect(random_invoice_item).not_to eq(invoice_item_one) if random_invoice_item == invoice_item_two
     end
   end
+
+  context "relationship endpoints" do
+    before(:each) do
+      @invoice_item = create(:invoice_item)
+    end
+
+    it "returns the associated invoice" do
+      queried_invoice_for_invoice_item = InvoiceItem.find(@invoice_item.id).invoice
+      invoice_method = InvoiceItem.has_invoice(@invoice_item.id)
+
+      expect(invoice_method).to eq(queried_invoice_for_invoice_item)
+    end
+
+    it "returns the associated item" do
+      queried_item_for_invoice_item = InvoiceItem.find(@invoice_item.id).item
+      item_method = InvoiceItem.has_item(@invoice_item.id)
+
+      expect(item_method).to eq(queried_item_for_invoice_item)
+    end
+  end
 end

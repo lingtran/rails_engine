@@ -12,4 +12,12 @@ class InvoiceItem < ActiveRecord::Base
   def self.rand
     order("RANDOM()").first
   end
+
+  def self.has_invoice(id)
+    find(id).invoice
+  end
+
+  def self.has_item(id)
+    find(id).item
+  end
 end
