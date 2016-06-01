@@ -84,4 +84,23 @@ RSpec.describe "Api::V1::ItemsController", type: :request do
       expect(response_body.class).to eq(Hash)
     end
   end
+
+  describe "GET invoice_items" do
+    before(:each) do
+      @item = create(:item)
+      id = @item.id
+      @invoice_item_one, @invoice_item_two = create_list(:invoice_item, 2, item_id: @item.id)
+      get "/api/v1/items/#{id}/invoice_items"
+    end
+
+    it "returns an invoice_items response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a collection of invoice items for item" do
+      expect(response_body.count).to eq(2)
+      expect(response_body.last[:id]).to eq(@item.invoice_items.last.id)
+    end
+  end
 end
