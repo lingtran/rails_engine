@@ -19,6 +19,14 @@ class Api::V1::InvoiceItemsController < Api::ApiController
     respond_with InvoiceItem.rand
   end
 
+  def invoice
+    respond_with InvoiceItem.has_invoice(params[:id])
+  end
+
+  def iteme
+    respond_with InvoiceItem.has_item(params[:id])
+  end
+
   private
 
   def invoice_item_params
