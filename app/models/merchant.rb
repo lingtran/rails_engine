@@ -2,6 +2,7 @@ class Merchant < ActiveRecord::Base
   scope :basic, -> { select(:id, :name) }
 
   has_many :invoices
+  has_many :items
   has_many :customers, through: :invoices
   has_many :invoice_items, through: :invoices
   has_many :transactions, through: :invoices
@@ -28,5 +29,13 @@ class Merchant < ActiveRecord::Base
 
   def self.rand
     order("RANDOM()").first
+  end
+
+  def self.items(id)
+    find_by(id: id).items
+  end
+
+  def self.invoices(id)
+    find_by(id: id).invoices
   end
 end
