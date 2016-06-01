@@ -1,6 +1,15 @@
 class Merchant < ActiveRecord::Base
   scope :basic, -> { select(:id, :name) }
 
+  has_many :invoices
+  has_many :customers, through: :invoices
+  has_many :invoice_items, through: :invoices
+  has_many :transactions, through: :invoices
+
+  validates :name, presence: true
+  validates :created_at, presence: true
+  validates :updated_at, presence: true
+
   def self.search_by(params)
     if params[:name]
       find_by("lower(name) LIKE ?", params[:name].downcase)
