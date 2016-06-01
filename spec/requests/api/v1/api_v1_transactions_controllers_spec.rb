@@ -84,4 +84,22 @@ RSpec.describe "Api::V1::TransactionsController", type: :request do
       expect(response_body.class).to eq(Hash)
     end
   end
+
+  describe "GET invoice" do
+    before(:each) do
+      invoice_id = create(:invoice).id
+      @transaction = create(:transaction, invoice_id: invoice_id)
+      id = @transaction.id
+      get "/api/v1/transactions/#{id}/invoice"
+    end
+
+    it "returns an invoice response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns an invoice record for transaction" do
+      expect(response_body[:id]).to eq(@transaction.invoice.id)
+    end
+  end
 end
