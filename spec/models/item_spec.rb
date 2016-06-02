@@ -31,8 +31,8 @@ RSpec.describe Item, type: :model do
     end
 
     it "returns a single item record for other searches" do
-      params = { unit_price: 100 }
-      not_number = { unit_price: 2}
+      params = { unit_price: "1.00" }
+      not_number = { unit_price: "2.00"}
       result = Item.search_by(params)
       nil_result = Item.search_by(not_number)
 
@@ -57,8 +57,8 @@ RSpec.describe Item, type: :model do
     end
 
     it "returns an array of item records for other searches" do
-      params = { unit_price: 100 }
-      not_number = { unit_price: 2 }
+      params = { unit_price: "1.00" }
+      not_number = { unit_price: "2.00" }
       result = Item.find_all(params)
       nil_result = Item.find_all(not_number)
 

@@ -36,7 +36,7 @@ RSpec.describe "Api::V1::ItemsController", type: :request do
     end
   end
 
-  describe "GET find" do
+  describe "GET find for name" do
     before(:each) do
       @item_one, @item_two = create_list(:item, 2)
       @name = @item_one.name
@@ -54,7 +54,24 @@ RSpec.describe "Api::V1::ItemsController", type: :request do
     end
   end
 
-  describe "GET find_all" do
+  describe "GET find for unit price" do
+    before(:each) do
+      @item_one, @item_two = create_list(:item, 2)
+      unit_price = "1.00"
+      get "/api/v1/items/find?unit_price=#{unit_price}"
+    end
+
+    it "returns a find response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a single item record found by name" do
+      expect(response_body[:id]).to eq(1)
+    end
+  end
+
+  describe "GET find_all for name" do
     before(:each) do
       @item_one, @item_two = create_list(:item, 2)
       @name = @item_one.name
@@ -69,6 +86,24 @@ RSpec.describe "Api::V1::ItemsController", type: :request do
     it "returns a collection of item records found by name" do
       expect(response_body.first[:id]).to eq(1)
       expect(response_body.count).to eq(1)
+    end
+  end
+
+  describe "GET find_all for unit price" do
+    before(:each) do
+      @item_one, @item_two = create_list(:item, 2)
+      unit_price = "1.00"
+      get "/api/v1/items/find_all?unit_price=#{unit_price}"
+    end
+
+    it "returns a find_all response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a collection of item records found by unit price" do
+      expect(response_body.first[:id]).to eq(1)
+      expect(response_body.count).to eq(2)
     end
   end
 

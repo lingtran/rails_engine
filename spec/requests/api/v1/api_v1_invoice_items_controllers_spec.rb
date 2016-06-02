@@ -35,7 +35,7 @@ RSpec.describe "Api::V1::InvoiceItemsController", type: :request do
     end
   end
 
-  describe "GET find" do
+  describe "GET find by quantity" do
     before(:each) do
       @invoice_item_one, @invoice_item_two = create_list(:invoice_item, 2)
       @quantity = @invoice_item_one.quantity
@@ -65,6 +65,43 @@ RSpec.describe "Api::V1::InvoiceItemsController", type: :request do
     end
 
     it "returns a collection of invoice items records found by invoice" do
+      expect(response_body.first[:id]).to eq(1)
+      expect(response_body.class).to eq(Array)
+      expect(response_body.count).to eq(2)
+    end
+  end
+
+  describe "GET find by unit price" do
+    before(:each) do
+      @invoice_item_one, @invoice_item_two = create_list(:invoice_item, 2)
+      unit_price = "1.00"
+      get "/api/v1/invoice_items/find?unit_price=#{unit_price}"
+    end
+
+    it "returns a find response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a single invoice record found by unit price" do
+      expect(response_body[:id]).to eq(1)
+    end
+  end
+
+  describe "GET find_all by unit price" do
+    before(:each) do
+      invoice_id = create(:invoice).id
+      @invoice_item_one, @invoice_item_two = create_list(:invoice_item, 2, invoice_id: invoice_id)
+      unit_price = "1.00"
+      get "/api/v1/invoice_items/find_all?unit_price=#{unit_price}"
+    end
+
+    it "returns a find_all response" do
+      expect(response).to have_http_status(200)
+      expect(response).to be_success
+    end
+
+    it "returns a collection of invoice items records found by unit price" do
       expect(response_body.first[:id]).to eq(1)
       expect(response_body.class).to eq(Array)
       expect(response_body.count).to eq(2)
