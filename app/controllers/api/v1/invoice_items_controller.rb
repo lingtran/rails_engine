@@ -8,11 +8,11 @@ class Api::V1::InvoiceItemsController < Api::ApiController
   end
 
   def find
-    respond_with InvoiceItem.find_by(invoice_item_params)
+    respond_with InvoiceItem.search_by(invoice_item_params)
   end
 
   def find_all
-    respond_with InvoiceItem.where(invoice_item_params)
+    respond_with InvoiceItem.find_all(invoice_item_params)
   end
 
   def random
@@ -30,6 +30,6 @@ class Api::V1::InvoiceItemsController < Api::ApiController
   private
 
   def invoice_item_params
-    params.permit(:item_id, :invoice_id, :quanity, :unit_price, :created_at, :updated_at)
+    params.permit(:id, :item_id, :invoice_id, :quantity, :unit_price, :created_at, :updated_at)
   end
 end

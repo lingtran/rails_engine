@@ -24,6 +24,42 @@ RSpec.describe InvoiceItem, type: :model do
     end
   end
 
+  context "single finder" do
+    before(:each) do
+      item = create(:item)
+      invoice = create(:invoice)
+      @invoice_item = create(:invoice_item, item_id: item.id, invoice_id: invoice.id)
+    end
+
+    it "returns a single invoice item record for unit price" do
+      params = { unit_price: "1.00" }
+      not_number = { unit_price: "2.00"}
+      result = InvoiceItem.search_by(params)
+      nil_result = InvoiceItem.search_by(not_number)
+
+      expect(result).to eq(@invoice_item)
+      expect(nil_result).to eq(nil)
+    end
+  end
+
+  context "multi finder" do
+    before(:each) do
+      item = create(:item)
+      invoice = create(:invoice)
+      @invoice_item = create(:invoice_item, item_id: item.id, invoice_id: invoice.id)
+    end
+
+    it "returns a collection of invoice item records for unit price" do
+      params = { unit_price: "1.00" }
+      not_number = { unit_price: "2.00"}
+      result = InvoiceItem.find_all(params)
+      nil_result = InvoiceItem.find_all(not_number)
+
+      expect(result).to eq([@invoice_item])
+      expect(nil_result).to eq([])
+    end
+  end
+
   context "relationship endpoints" do
     before(:each) do
       @invoice_item = create(:invoice_item)

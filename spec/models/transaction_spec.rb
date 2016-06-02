@@ -65,7 +65,7 @@ RSpec.describe Transaction, type: :model do
       expect(second_result).to eq([])
     end
 
-    it "returns an array of transaction records for other searches" do
+    it "returns an array of transaction records for credit_card_number" do
       params = { credit_card_number: "4654405418249632" }
       not_number = { credit_card_number: "4140149827486249"}
       result = Transaction.find_all(params)
@@ -73,6 +73,14 @@ RSpec.describe Transaction, type: :model do
 
       expect(result).to eq([@transaction])
       expect(nil_result).to eq([])
+    end
+
+    it "returns an array of transaction records for id" do
+      params = { id: 1 }
+      result = Transaction.find_all(params)
+
+      expect(result).to eq([@transaction])
+      expect(result.length).to eq(1)
     end
   end
 
