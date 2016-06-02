@@ -2,11 +2,20 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :merchants, only: [:index, :show] do
-        get 'find', on: :collection
-        get 'find_all', on: :collection
-        get 'random', on: :collection
-        get 'items', on: :member
-        get 'invoices', on: :member
+        collection do
+          get 'find'
+          get 'find_all'
+          get 'random'
+          scope module: "merchants" do
+            get 'most_revenue', to: "most_revenue#index"
+            get 'most_items', to: "most_items#index"
+            get 'revenue', to: "revenue#index"
+          end
+        end
+        member do
+          get 'items'
+          get 'invoices'
+        end
       end
 
       resources :customers, only: [:index, :show] do

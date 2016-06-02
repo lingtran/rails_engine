@@ -75,4 +75,31 @@ RSpec.describe Merchant, type: :model do
       expect(invoices_from_method).to eq(queried_invoices_for_merchant)
     end
   end
+
+  context "all merchants business intelligence" do
+    before(:each) do
+      load_associations
+    end
+
+    it "can return top x merchants ranked by most revenue" do
+      x = 1
+      query = Merchant.ranked_by_most_revenue(x)
+
+      expect(query).to eq([merchant_two])
+    end
+
+    it "can return top x merchants ranked by most items sold" do
+      x = 1
+      query = Merchant.ranked_by_most_items(x)
+
+      expect(query).to eq([merchant_two])
+    end
+
+    it "can return the total revenue for date x across all merchants" do
+      date = "2012-03-27 14:53:59"
+      query = Merchant.total_revenue_by_date(date)
+
+      expect(query).to eq(200)
+    end
+  end
 end
