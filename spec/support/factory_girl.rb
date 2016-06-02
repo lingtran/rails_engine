@@ -4,8 +4,8 @@ FactoryGirl.define do
      "#{n}"
     end
 
-    created_at "2012-03-27 14:53:59 UTC"
-    updated_at "2012-03-27 14:53:59 UTC"
+    created_at "2012-03-27 14:53:59"
+    updated_at "2012-03-27 14:53:59"
   end
 
   factory :customer do
@@ -17,8 +17,8 @@ FactoryGirl.define do
       "#{n}"
     end
 
-    created_at "2012-03-27 14:53:59 UTC"
-    updated_at "2012-03-27 14:53:59 UTC"
+    created_at "2012-03-27 14:53:59"
+    updated_at "2012-03-27 14:53:59"
   end
 
   factory :item do
@@ -28,16 +28,16 @@ FactoryGirl.define do
     description "Description"
     unit_price 100
     merchant
-    created_at "2012-03-27 14:53:59 UTC"
-    updated_at "2012-03-27 14:53:59 UTC"
+    created_at "2012-03-27 14:53:59"
+    updated_at "2012-03-27 14:53:59"
   end
 
   factory :invoice do
     customer
     merchant
     status "shipped"
-    created_at "2012-03-27 14:53:59 UTC"
-    updated_at "2012-03-27 14:53:59 UTC"
+    created_at "2012-03-27 14:53:59"
+    updated_at "2012-03-27 14:53:59"
   end
 
   factory :invoice_item do
@@ -45,8 +45,8 @@ FactoryGirl.define do
     invoice
     quantity 1
     unit_price 100
-    created_at "2012-03-27 14:53:59 UTC"
-    updated_at "2012-03-27 14:53:59 UTC"
+    created_at "2012-03-27 14:53:59"
+    updated_at "2012-03-27 14:53:59"
   end
 
   factory :transaction do
@@ -61,7 +61,7 @@ FactoryGirl.define do
       "#{n}"
     end
 
-    created_at "2012-03-27 14:53:59 UTC"
-    updated_at "2012-03-27 14:53:59 UTC"
+    created_at "2012-03-27 14:53:59"
+    updated_at "2012-03-27 14:53:59"
   end
 end
