@@ -1,4 +1,5 @@
-== README
+README
+===
 
 **Getting Started**
   * ``git clone https://github.com/lingtran/rails_engine.git``
