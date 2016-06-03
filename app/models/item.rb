@@ -38,4 +38,29 @@ class Item < ActiveRecord::Base
   def self.rand
     order("RANDOM()").first
   end
+
+  def self.ranked_by_most_revenue(quantity)
+    joins(:invoice_items)
+    .group(:id)
+    .order("SUM(invoice_items.quantity * invoice_items.unit_price) DESC")
+    .limit(quantity)
+  end
+
+  def self.ranked_by_most_items(quantity)
+    joins(:invoice_items)
+    .group(:id)
+    .order("SUM(invoice_items.quantity) DESC")
+    .limit(quantity)
+  end
+
+  def self.best_day(id)
+    Invoice
+    .joins(:invoice_items)
+    .where(invoice_items: {item_id: id})
+    .group(:id)
+    .order("SUM(invoice_items.quantity) DESC")
+    .limit(1)
+    .first
+    .created_at
+  end
 end
