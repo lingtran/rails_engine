@@ -45,4 +45,11 @@ class Item < ActiveRecord::Base
     .order("SUM(invoice_items.quantity * invoice_items.unit_price) DESC")
     .limit(quantity)
   end
+
+  def self.ranked_by_most_items(quantity)
+    joins(:invoice_items)
+    .group(:id)
+    .order("SUM(invoice_items.quantity) DESC")
+    .limit(quantity)
+  end
 end

@@ -43,16 +43,17 @@ Rails.application.routes.draw do
       end
 
       resources :items, only: [:index, :show] do
-        get 'find', on: :collection
-        get 'find_all', on: :collection
-        get 'random', on: :collection
-        get 'invoice_items', on: :member
-        get 'merchant', on: :member
         collection do
+          get 'find'
+          get 'find_all'
+          get 'random'
           scope module: "items" do
             get 'most_revenue', to: "most_revenue#index"
+            get 'most_items', to: "most_items#index"
           end
         end
+        get 'invoice_items', on: :member
+        get 'merchant', on: :member
       end
 
 
