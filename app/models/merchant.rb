@@ -1,6 +1,6 @@
 class Merchant < ActiveRecord::Base
   scope :basic, -> { select(:id, :name) }
-  scope :successful_transacs, -> { where(transactions: {result: "success"}) }
+  scope :joins_success_transacs, -> { joins(:transactions).where(transactions: { result: "success"}) }
 
   has_many :invoices
   has_many :items
@@ -51,8 +51,8 @@ class Merchant < ActiveRecord::Base
   end
 
   def self.ranked_by_most_items(quantity)
-    successful_transacs
-    .joins(invoices: [:transactions, :invoice_items])
+    joins(invoices: [:transactions, :invoice_items])
+    .where(transactions: { result: "success" })
     .group(:id)
     .order("SUM(invoice_items.quantity) DESC")
     .limit(quantity)
@@ -76,5 +76,19 @@ class Merchant < ActiveRecord::Base
     .where({merchant_id: id, created_at: date})
     .joins(:invoice_items)
     .sum("invoice_items.quantity * invoice_items.unit_price")
+  end
+
+  def self.favorite_customer_for_merchant(id)
+    id = Merchant.joins_success_transacs
+    .joins(:invoices)
+    .where(invoices: { merchant_id: id })
+    .includes(:customers)
+    .group("invoices.customer_id")
+    .count
+    .sort { |a,b| b[1]<=>a[1] }
+    .max_by { |a,b| b }
+    .first
+
+    Customer.find(id)
   end
 end
