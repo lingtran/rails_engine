@@ -1,6 +1,6 @@
 == README
 
-*Getting Started*
+***Getting Started***
   * git clone https://github.com/lingtran/rails_engine.git
   * bundle
   * rake db:reset
