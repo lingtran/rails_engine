@@ -1,6 +1,6 @@
 == README
 
-***Getting Started***
+Getting Started
   * git clone https://github.com/lingtran/rails_engine.git
   * bundle
   * rake db:reset
@@ -15,9 +15,9 @@
       * rake import_data:transactions
 
 
-*Root API endpoint *
+Root API endpoint
   * http://localhost:3000/api/v1/
 
 
-*Note to evaluator*
+Note to evaluator
   * Spec harness is down to two failures/errors
