@@ -66,7 +66,9 @@ module DataHelpers
   end
 
   def create_transactions
-    @trans_one, @trans_two, @trans_three = create_list(:transaction, 3)
+    @trans_one, @trans_two, @trans_three = create_list(:transaction, 3, result: "success")
+
+    @trans_three.update(result: "failed")
 
     @invoice_one.transactions << @trans_one
     @invoice_two.transactions << @trans_two

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Merchants::RevenueController", type: :request do
+RSpec.describe "Api::V1::Merchant::RevenueController", type: :request do
   describe "GET revenue" do
     before(:each) do
       load_associations
-      x = "2012-03-27 14:53:59"
+      id = 2
 
-      get "/api/v1/merchants/revenue?date=#{x}"
+      get "/api/v1/merchants/#{id}/revenue"
     end
 
     it "returns a revenue response" do
@@ -14,10 +14,10 @@ RSpec.describe "Api::V1::Merchants::RevenueController", type: :request do
       expect(response).to be_success
     end
 
-    it "returns the total revenue for date x across all merchants" do
+    it "returns the total revenue for merchant across all transactions" do
       expect(response_body.count).to eq(1)
 
-      expect(response_body).to eq({:total_revenue=>"4.0"})
+      expect(response_body).to eq({:revenue=>"3.0"})
     end
   end
 end

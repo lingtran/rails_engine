@@ -99,7 +99,20 @@ RSpec.describe Merchant, type: :model do
       date = "2012-03-27 14:53:59"
       query = Merchant.total_revenue_by_date(date)
 
-      expect(query).to eq(200)
+      expect(query).to eq(400)
+    end
+  end
+
+  context "single merchant business intelligence" do
+    before(:each) do
+      load_associations
+    end
+
+    it "can return total revenue for merchant across all transactions" do
+      id = 1
+      query = Merchant.revenue_for_merchant(id)
+
+      expect(query).to eq(100)
     end
   end
 end

@@ -15,6 +15,9 @@ Rails.application.routes.draw do
         member do
           get 'items'
           get 'invoices'
+          scope module: "merchant" do
+            get "revenue", to: "revenue#index"
+          end
         end
       end
 
