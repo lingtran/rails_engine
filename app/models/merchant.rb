@@ -91,4 +91,12 @@ class Merchant < ActiveRecord::Base
 
     Customer.find(id)
   end
+
+  def self.customers_with_pending_invoices_for_merchant(id)
+    Customer
+    .joins(invoices: [:transactions, :merchant])
+    .where(transactions: {result: "failed"})
+    .where(invoices: {merchant_id: id})
+    .distinct
+  end
 end

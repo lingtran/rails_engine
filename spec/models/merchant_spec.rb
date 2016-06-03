@@ -129,5 +129,14 @@ RSpec.describe Merchant, type: :model do
 
       expect(query).to eq(customer_one)
     end
+
+    it "returns a collection of customers which have pending (unpaid) invoices" do
+      id = 1
+
+      query = Merchant.customers_with_pending_invoices_for_merchant(id)
+
+      expect(query).to eq([customer_two])
+      expect(query.count).to eq(1)
+    end
   end
 end

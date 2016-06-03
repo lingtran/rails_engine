@@ -18,6 +18,7 @@ Rails.application.routes.draw do
           scope module: "merchant" do
             get "revenue", to: "revenue#index"
             get "favorite_customer", to: "favorite_customer#index"
+            get "customers_with_pending_invoices", to: "customers_with_pending_invoices#index"
           end
         end
       end
