@@ -75,4 +75,18 @@ RSpec.describe Item, type: :model do
       expect(random_item).not_to eq(item_one) if random_item == item_two
     end
   end
+
+  context "business intelligence endpoints" do
+    before(:each) do
+      load_associations
+    end
+
+    it "returns the top x items ranked by total revenue generated" do
+      x = 2
+      query = Item.ranked_by_most_revenue(x)
+
+      expect(query.length).to eq(2)
+      expect(query).to eq([item_five, item_two])
+    end
+  end
 end

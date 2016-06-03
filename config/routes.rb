@@ -48,7 +48,13 @@ Rails.application.routes.draw do
         get 'random', on: :collection
         get 'invoice_items', on: :member
         get 'merchant', on: :member
+        collection do
+          scope module: "items" do
+            get 'most_revenue', to: "most_revenue#index"
+          end
+        end
       end
+
 
       resources :invoice_items, only: [:index, :show] do
         get 'find', on: :collection

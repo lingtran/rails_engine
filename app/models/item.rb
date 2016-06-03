@@ -38,4 +38,11 @@ class Item < ActiveRecord::Base
   def self.rand
     order("RANDOM()").first
   end
+
+  def self.ranked_by_most_revenue(quantity)
+    joins(:invoice_items)
+    .group(:id)
+    .order("SUM(invoice_items.quantity * invoice_items.unit_price) DESC")
+    .limit(quantity)
+  end
 end
