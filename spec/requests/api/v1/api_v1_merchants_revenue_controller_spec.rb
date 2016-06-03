@@ -16,7 +16,8 @@ RSpec.describe "Api::V1::Merchants::RevenueController", type: :request do
 
     it "returns the total revenue for date x across all merchants" do
       expect(response_body.count).to eq(1)
-      expect(response_body[:revenue]).to eq({:total_revenue=>"3.0"})
+
+      expect(response_body).to eq({:total_revenue=>"4.0"})
     end
   end
 end

@@ -1,6 +1,6 @@
 class Merchant < ActiveRecord::Base
   scope :basic, -> { select(:id, :name) }
-  scope :successful_transacs, -> { where(transactions: {result: "success"}) }
+  scope :joins_success_transacs, -> { joins(:transactions).where(transactions: { result: "success"}) }
 
   has_many :invoices
   has_many :items
@@ -51,8 +51,8 @@ class Merchant < ActiveRecord::Base
   end
 
   def self.ranked_by_most_items(quantity)
-    successful_transacs
-    .joins(invoices: [:transactions, :invoice_items])
+    joins(invoices: [:transactions, :invoice_items])
+    .where(transactions: { result: "success" })
     .group(:id)
     .order("SUM(invoice_items.quantity) DESC")
     .limit(quantity)
@@ -60,5 +60,43 @@ class Merchant < ActiveRecord::Base
 
   def self.total_revenue_by_date(date)
     Invoice.joins(:transactions).where(transactions: {result: "success"}).where(created_at: date).joins(:invoice_items).sum("invoice_items.unit_price * invoice_items.quantity")
+  end
+
+  def self.revenue_for_merchant(id)
+    find(id)
+    .invoices
+    .joins(:transactions)
+    .where(transactions: {result: "success"})
+    .joins(:invoice_items)
+    .sum("invoice_items.unit_price * invoice_items.quantity")
+  end
+
+  def self.revenue_for_merchant_by_date(id, date)
+    Invoice
+    .where({merchant_id: id, created_at: date})
+    .joins(:invoice_items)
+    .sum("invoice_items.quantity * invoice_items.unit_price")
+  end
+
+  def self.favorite_customer_for_merchant(id)
+    id = Merchant.joins_success_transacs
+    .joins(:invoices)
+    .where(invoices: { merchant_id: id })
+    .includes(:customers)
+    .group("invoices.customer_id")
+    .count
+    .sort { |a,b| b[1]<=>a[1] }
+    .max_by { |a,b| b }
+    .first
+
+    Customer.find(id)
+  end
+
+  def self.customers_with_pending_invoices_for_merchant(id)
+    Customer
+    .joins(invoices: [:transactions, :merchant])
+    .where(transactions: {result: "failed"})
+    .where(invoices: {merchant_id: id})
+    .distinct
   end
 end

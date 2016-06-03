@@ -99,7 +99,44 @@ RSpec.describe Merchant, type: :model do
       date = "2012-03-27 14:53:59"
       query = Merchant.total_revenue_by_date(date)
 
+      expect(query).to eq(400)
+    end
+  end
+
+  context "single merchant business intelligence" do
+    before(:each) do
+      load_associations
+    end
+
+    it "can return total revenue for merchant across all transactions" do
+      id = 1
+      query = Merchant.revenue_for_merchant(id)
+
+      expect(query).to eq(100)
+    end
+
+    it "can return the total revenue for that merchant for a specific invoice date x" do
+      id = 1
+      date = "2012-03-27 14:53:59"
+      query = Merchant.revenue_for_merchant_by_date(id, date)
+
       expect(query).to eq(200)
+    end
+
+    it "returns the customer who has conducted the most total number of successful transactions" do
+      id = 2
+      query = Merchant.favorite_customer_for_merchant(id)
+
+      expect(query).to eq(customer_one)
+    end
+
+    it "returns a collection of customers which have pending (unpaid) invoices" do
+      id = 1
+
+      query = Merchant.customers_with_pending_invoices_for_merchant(id)
+
+      expect(query).to eq([customer_two])
+      expect(query.count).to eq(1)
     end
   end
 end

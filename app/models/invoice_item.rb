@@ -39,8 +39,4 @@ class InvoiceItem < ActiveRecord::Base
   def self.has_item(id)
     find(id).item
   end
-
-  # total
-    # p = (unit_price.to_f)/100
-    # total = p * quantity
 end
