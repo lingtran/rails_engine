@@ -70,4 +70,11 @@ class Merchant < ActiveRecord::Base
     .joins(:invoice_items)
     .sum("invoice_items.unit_price * invoice_items.quantity")
   end
+
+  def self.revenue_for_merchant_by_date(id, date)
+    Invoice
+    .where({merchant_id: id, created_at: date})
+    .joins(:invoice_items)
+    .sum("invoice_items.quantity * invoice_items.unit_price")
+  end
 end

@@ -114,5 +114,13 @@ RSpec.describe Merchant, type: :model do
 
       expect(query).to eq(100)
     end
+
+    it "can return the total revenue for that merchant for a specific invoice date x" do
+      id = 1
+      date = "2012-03-27 14:53:59"
+      query = Merchant.revenue_for_merchant_by_date(id, date)
+
+      expect(query).to eq(200)
+    end
   end
 end
