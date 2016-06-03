@@ -88,7 +88,7 @@ RSpec.describe Item, type: :model do
       expect(query.length).to eq(2)
       expect(query).to eq([item_five, item_two])
     end
-    
+
     it "returns the top x item instances ranked by total number sold" do
       x = 2
       query = Item.ranked_by_most_items(x)
@@ -96,6 +96,13 @@ RSpec.describe Item, type: :model do
       expect(query.length).to eq(2)
       expect(query).to eq([item_five, item_two])
     end
-  end
 
+    it "returns the date with the most sales for the given item using the invoice date" do
+      item_id = 2
+      query = Item.best_day(item_id)
+      best_day = query.strftime("%FT%T.%LZ")
+
+      expect(best_day).to eq("2012-03-27T14:53:59.000Z")
+    end
+  end
 end

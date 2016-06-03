@@ -52,10 +52,14 @@ Rails.application.routes.draw do
             get 'most_items', to: "most_items#index"
           end
         end
-        get 'invoice_items', on: :member
-        get 'merchant', on: :member
+        member do
+          get 'invoice_items'
+          get 'merchant'
+          scope module: "item" do
+            get 'best_day', to: "best_day#index"
+          end
+        end
       end
-
 
       resources :invoice_items, only: [:index, :show] do
         get 'find', on: :collection

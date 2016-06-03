@@ -52,4 +52,15 @@ class Item < ActiveRecord::Base
     .order("SUM(invoice_items.quantity) DESC")
     .limit(quantity)
   end
+
+  def self.best_day(id)
+    Invoice
+    .joins(:invoice_items)
+    .where(invoice_items: {item_id: id})
+    .group(:id)
+    .order("SUM(invoice_items.quantity) DESC")
+    .limit(1)
+    .first
+    .created_at
+  end
 end
