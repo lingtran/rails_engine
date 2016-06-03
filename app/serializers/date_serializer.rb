@@ -1,7 +1,7 @@
 class DateSerializer < ActiveModel::Serializer
-  attributes :date
+  attributes :best_day
 
-  def date
+  def best_day
     object.strftime("%FT%T.%LZ")
   end
 end

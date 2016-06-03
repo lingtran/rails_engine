@@ -15,7 +15,7 @@ RSpec.describe "Api::V1::Item::BestDayController", type: :request do
      end
 
      it "returns the date with the most sales for the given item using the invoice date" do
-       expect(response_body).to eq({:date=>"2012-03-27T14:53:59.000Z"})
+       expect(response_body).to eq({:best_day=>"2012-03-27T14:53:59.000Z"})
        expect(response_body[:date].class).not_to eq(Date)
      end
   end
