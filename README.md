@@ -1,6 +1,8 @@
 ## Synopsis
 Designed and versioned API using Ruby and ActiveRecord to perform complicated business intelligence. Built Single-Responsibility controllers with tests.
 
+![http://g.recordit.co/n9hyiyZLoC.gif](http://g.recordit.co/n9hyiyZLoC.gif)
+
 ## Motivation
 
 Learn how to build Single-Responsibility controllers to provide a  well-designed and versioned JSON API. Learned how to be test-driven with controllers to inform design. Learn to user Ruby and ActiveRecord to perform complex business intelligence.
@@ -34,6 +36,21 @@ Learn how to build Single-Responsibility controllers to provide a  well-designed
       * ``rake import_data:items``
       * ``rake import_data:invoice_items``
       * ``rake import_data:transactions``
+
+
+  * Output messages upon each successful `rake task`:
+
+    > Successfully imported 1000 customers
+
+    > Successfully imported 100 merchants
+
+    > Successfully imported 4843 invoices
+
+    > Successfully imported 2483 items
+
+    > Successfully imported 21687 invoice items
+
+    > Successfully imported 5595 transactions
 
 
 ##### Root API endpoint
