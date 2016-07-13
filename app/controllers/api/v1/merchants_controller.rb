@@ -1,6 +1,6 @@
 class Api::V1::MerchantsController < Api::ApiController
   def index
-    respond_with Merchant.basic.all
+    respond_with ::Merchant.basic.all
   end
 
   def show
