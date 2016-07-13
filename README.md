@@ -39,9 +39,9 @@ Learn how to build Single-Responsibility controllers to provide a  well-designed
 ##### Root API endpoint
   > http://localhost:3000/api/v1/
 
-  > Run server `rails s` before visiting endpoints
+  * Run server `rails s` before visiting endpoints
 
-  > Reference [API Endpoints](#api-endpoints) to access list of endpoints
+  * Reference [API Endpoints](#api-endpoints) to access list of endpoints
 
 ## API Endpoints
   * [API Reference](https://github.com/lingtran/rails_engine/blob/master/api-reference.md)
