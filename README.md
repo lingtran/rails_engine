@@ -38,7 +38,7 @@ Learn how to build Single-Responsibility controllers to provide a  well-designed
       * ``rake import_data:transactions``
 
 
-  * Output messages upon each successful `rake task`:
+  * Output messages upon each successful `rake import_data` task:
 
     > Successfully imported 1000 customers
 
