@@ -1,4 +1,5 @@
 class Merchant < ActiveRecord::Base
+  # Question: okay to start from another table explictly? ex. Invoice.blah within a class method?
   scope :basic, -> { select(:id, :name) }
   scope :joins_success_transacs, -> { joins(:transactions).where(transactions: { result: "success"}) }
 
