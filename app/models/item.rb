@@ -25,7 +25,7 @@ class Item < ActiveRecord::Base
   def self.find_all(params)
     if params[:name]
       where("lower(name) LIKE ?", params[:name].downcase)
-    elsif params[:description]
+    elsif params[:descriptions]
       where("lower(description) LIKE ?", params[:description].downcase)
     elsif params[:unit_price]
       unit_price = (params[:unit_price].to_f * 100).round
